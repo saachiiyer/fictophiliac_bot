@@ -1,27 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fictophiliac Book Discovery</title>
-  <link rel="stylesheet" href="css/styles.css" />
-</head>
-<body>
-  <div class="container">
-    <header style="margin-bottom: 2rem;">
-      <h1>📚 Fictophiliac</h1>
-      <p style="color: var(--text-muted);">Your personalized literary companion powered by Gemini</p>
-    </header>
-    <div id="questionnaire" class="card">
-      <h3 id="prompt-text"></h3>
-      <input type="text" id="answer-input" autocomplete="off" />
-      <div>
-        <button id="btn-submit" class="btn-primary">Next</button>
-        <button id="btn-skip" class="btn-secondary">Skip</button>
-      </div>
-    </div>
-    <div id="recommendation-grid" class="grid"></div>
-  </div>
-  <script type="module" src="js/main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fictophiliac | The Literary Cave by Saachi Iyer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#08080a] text-zinc-100 antialiased selection:bg-[#e06b53] selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

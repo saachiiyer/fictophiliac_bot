@@ -1249,7 +1249,25 @@
       onResetChat,
     }) {
       const [inputVal, setInputVal] = useState('');
+      const [selectedGenres, setSelectedGenres] = useState([]);
       const chatEndRef = useRef(null);
+
+      const toggleGenre = (genreWithIcon) => {
+        const cleanGenre = genreWithIcon.replace(/^[^\w]+/, '').trim();
+        setSelectedGenres((prev) => {
+          if (prev.includes(cleanGenre)) {
+            return prev.filter((g) => g !== cleanGenre);
+          } else {
+            return [...prev, cleanGenre];
+          }
+        });
+      };
+
+      const handleDoneGenres = () => {
+        if (selectedGenres.length === 0) return;
+        onSendMessage(selectedGenres.join(', '));
+        setSelectedGenres([]);
+      };
 
       useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -1356,18 +1374,67 @@
                   )}
 
                   {msg.quickPicks && msg.quickPicks.type === 'genres' && chatStep === 3 && (
-                    <div className="mt-3 pt-2.5 border-t border-zinc-800/80 space-y-2">
-                      <span className="text-[11px] text-zinc-400 block">Tap one or more genres to recommend:</span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {genreSuggestions.map((g, i) => (
-                          <button
-                            key={i}
-                            onClick={() => onSendMessage(g.replace(/^[^\w]+/, '').trim())}
-                            className="text-[11px] px-3 py-1 rounded-full bg-zinc-800 hover:bg-brand-600 hover:text-white text-zinc-300 border border-zinc-700 transition"
-                          >
-                            {g}
-                          </button>
-                        ))}
+                    <div className="mt-3 pt-3 border-t border-zinc-800/80 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-zinc-300 font-medium">
+                          Select one or more reading vibes:
+                        </span>
+                        {selectedGenres.length > 0 && (
+                          <span className="text-[11px] text-brand-400 font-semibold px-2.5 py-0.5 rounded-full bg-brand-500/10 border border-brand-500/25">
+                            {selectedGenres.length} selected
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                        {genreSuggestions.map((g, i) => {
+                          const clean = g.replace(/^[^\w]+/, '').trim();
+                          const isSelected = selectedGenres.includes(clean);
+                          return (
+                            <button
+                              key={i}
+                              type="button"
+                              onClick={() => toggleGenre(g)}
+                              className={`text-xs px-3 py-1.5 rounded-xl border transition-all duration-200 flex items-center space-x-1.5 cursor-pointer ${
+                                isSelected
+                                  ? 'bg-gradient-to-r from-brand-600 to-amber-600 text-white border-amber-500/70 shadow-md shadow-brand-600/30 font-semibold scale-[1.02]'
+                                  : 'bg-zinc-800/90 hover:bg-zinc-700/80 text-zinc-300 border-zinc-700 hover:border-zinc-600'
+                              }`}
+                            >
+                              <span>{g}</span>
+                              {isSelected && <i className="fa-solid fa-check text-[11px] ml-1"></i>}
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      {/* Done Button to Trigger Selection */}
+                      <div className="pt-1 flex items-center justify-between gap-3">
+                        <button
+                          type="button"
+                          onClick={handleDoneGenres}
+                          disabled={selectedGenres.length === 0}
+                          className={`px-5 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-2 transition-all duration-200 shadow-md ${
+                            selectedGenres.length > 0
+                              ? 'bg-gradient-to-r from-brand-600 to-amber-500 hover:from-brand-500 hover:to-amber-400 text-white shadow-brand-500/30 cursor-pointer'
+                              : 'bg-zinc-800 text-zinc-500 border border-zinc-700/60 cursor-not-allowed'
+                          }`}
+                        >
+                          <i className="fa-solid fa-sparkles text-xs"></i>
+                          <span>
+                            {selectedGenres.length > 0
+                              ? `Done • Get Recommendations (${selectedGenres.length} selected)`
+                              : 'Select 1 or more genres above'}
+                          </span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={onSkipStep}
+                          className="text-xs text-zinc-400 hover:text-zinc-200 px-3 py-1.5 rounded-lg hover:bg-zinc-800/60 transition"
+                        >
+                          Skip step &rarr;
+                        </button>
                       </div>
                     </div>
                   )}
