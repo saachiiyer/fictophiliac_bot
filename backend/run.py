@@ -35,6 +35,12 @@ def get_available_port(default_port: int) -> int:
             except ValueError:
                 pass
 
+    if "PORT" in os.environ:
+        try:
+            return int(os.environ["PORT"])
+        except ValueError:
+            pass
+
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         try:
             s.bind(('0.0.0.0', default_port))
