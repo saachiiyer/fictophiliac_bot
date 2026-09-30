@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fictophiliac Book Discovery</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header style="margin-bottom: 2rem;">
+      <h1>📚 Fictophiliac</h1>
+      <p style="color: var(--text-muted);">Your personalized literary companion powered by Gemini</p>
+    </header>
+    <div id="questionnaire" class="card">
+      <h3 id="prompt-text"></h3>
+      <input type="text" id="answer-input" autocomplete="off" />
+      <div>
+        <button id="btn-submit" class="btn-primary">Next</button>
+        <button id="btn-skip" class="btn-secondary">Skip</button>
+      </div>
+    </div>
+    <div id="recommendation-grid" class="grid"></div>
+  </div>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
